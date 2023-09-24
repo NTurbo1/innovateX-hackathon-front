@@ -8,24 +8,24 @@ import ReactModal from 'react-modal';
 const MissingPeople = () => {
     
     const [missingPeople, setMissingPeople] = useState({})
-    const [modelOpen, setModelOpen] = useState(false)
-    const [modelContent, setModelContent] = useState("")
+    const [modalOpen, setModalOpen] = useState(false)
+    const [modalContent, setModalContent] = useState("")
 
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
             items: 3,
-            slidesToSlide: 3, // optional, default to 1.
+            slidesToSlide: 3,
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
             items: 2,
-            slidesToSlide: 2, // optional, default to 1.
+            slidesToSlide: 2,
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 1,
-            slidesToSlide: 1, // optional, default to 1.
+            slidesToSlide: 1,
         },
     };
 
@@ -52,7 +52,7 @@ const MissingPeople = () => {
                     <img
                         id={`${id}`}
                         onClick={(event) => {
-                            setModelContent(() => {
+                            setModalContent(() => {
                                 return (
                                     <div className='model-content'>
                                         <span
@@ -74,7 +74,7 @@ const MissingPeople = () => {
                                     </div>
                                 )
                             })
-                            setModelOpen(true)
+                            setModalOpen(true)
                         }}
                         src={missingPerson.image}
                         alt={`missingPerson ${missingPerson.id}`}
@@ -84,19 +84,19 @@ const MissingPeople = () => {
             ))}
 
             <ReactModal
-                isOpen = {modelOpen}
-                contentLabel="Example Modal"
-                onRequestClose={() => setModelOpen(false)}
+                isOpen = {modalOpen}
+                contentLabel="Missing person info"
+                onRequestClose={() => setModalOpen(false)}
                 className='w-96 h-96 bg-white rounded-xl p-5 flex flex-col items-center'
             >
                 <button
-                    onClick={() => setModelOpen(false)}
+                    onClick={() => setModalOpen(false)}
                     className='model-close-btn grow-0'
                 >
                     X
                 </button>
 
-                {modelContent}
+                {modalContent}
             </ReactModal>
         </Carousel>
     );

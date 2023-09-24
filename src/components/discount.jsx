@@ -12,17 +12,17 @@ const Discount = () => {
         desktop: {
             breakpoint: { max: 3000, min: 1080 },
             items: 3,
-            slidesToSlide: 3, // optional, default to 1.
+            slidesToSlide: 3,
         },
         tablet: {
             breakpoint: { max: 1080, min: 464 },
             items: 3,
-            slidesToSlide: 2, // optional, default to 1.
+            slidesToSlide: 2,
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 1,
-            slidesToSlide: 1, // optional, default to 1.
+            slidesToSlide: 1,
         },
     };
 
