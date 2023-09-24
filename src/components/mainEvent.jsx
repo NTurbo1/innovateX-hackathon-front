@@ -6,9 +6,9 @@ import { apiEndPoints } from '../apiEndPoints';
 
 const MainEvent = () => {
     // For testing only (replace with useEffect later)
-    const mockData = [{"id":1,"name":"DSKHC","date":"11.11.2023","time":"13:30","image":"picture.png"}]
+    // const mockData = [{"id":1,"name":"DSKHC","date":"11.11.2023","time":"13:30","image":"picture.png"}]
     
-    const [events, setEvents] = useState(mockData);
+    const [events, setEvents] = useState([]);
 
     const responsive = {
         desktop: {
@@ -28,14 +28,14 @@ const MainEvent = () => {
         },
     };
 
-    // useEffect(() => {
-    //     fetch(apiEndPoints.events, { mode: "cors" })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //         setEvents(data);
-    //     })
-    //     .catch((error) => console.error(error));
-    // }, []);
+    useEffect(() => {
+        fetch(apiEndPoints.events, { mode: "cors" })
+        .then((response) => response.json())
+        .then((data) => {
+            setEvents(data);
+        })
+        .catch((error) => console.error(error));
+    }, []);
 
     return (
         <Carousel

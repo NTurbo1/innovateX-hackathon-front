@@ -3,12 +3,13 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './styles/missingPeople-style.css'
 import { apiEndPoints } from '../apiEndPoints';
+import ReactModal from 'react-modal';
 
 const MissingPeople = () => {
-    // For testing only (replace with useEffect later)
-    const mockData = [{"id":1,"category":"human","name":"Sayat","additional":"IT fan is missing, prolly sleeps somewhere. If you see him, please tell to return home.","image":"https://media.licdn.com/dms/image/D4D03AQH0ouS4XgTGKA/profile-displayphoto-shrink_800_800/0/1688196619724?e=2147483647\u0026v=beta\u0026t=cy0oQF5IxquCDqDHstjzMeZJb_dIrQys3P7MJrXVW-E"}]
     
-    const [missingPeople, setMissingPeople] = useState(mockData);
+    const [missingPeople, setMissingPeople] = useState({})
+    const [modelOpen, setModelOpen] = useState(false)
+    const [modelContent, setModelContent] = useState("")
 
     const responsive = {
         desktop: {
@@ -28,32 +29,75 @@ const MissingPeople = () => {
         },
     };
 
-    // useEffect(() => {
-    //     fetch(apiEndPoints.missing, { mode: "cors" })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //         setMissingPeople(data);
-    //     })
-    //     .catch((error) => console.error(error));
-    // }, []);
+    useEffect(() => {
+        fetch(apiEndPoints.missing, { mode: "cors" })
+        .then((response) => response.json())
+        .then((data) => {
+            const missingPeople = {}
+            data.forEach(element => {
+                missingPeople[`${element.id}`] = element
+            });
+            setMissingPeople(missingPeople);
+        })
+        .catch((error) => console.error(error));
+    }, []);
 
     return (
         <Carousel
             className='bg-gray-500 h-96 w-11/12 mx-auto m-0 p-7 rounded-lg'
             responsive={responsive}
         >
-            {missingPeople.map((missingPerson) => (
-                <div key={missingPerson.id} className='relative flex flex-col gap-5 items-center'>
+            {Object.entries(missingPeople).map(([id, missingPerson]) => (
+                <div key={id} className='relative flex flex-col gap-5 items-center'>
                     <img
+                        id={`${id}`}
+                        onClick={(event) => {
+                            setModelContent(() => {
+                                return (
+                                    <div className='model-content'>
+                                        <span
+                                            className='text-4xl w-full flex justify-center'
+                                        >
+                                            {missingPerson.name}
+                                        </span>
+
+                                        <div
+                                            className='flex flex-col gap-3.5'
+                                        >
+                                            <span 
+                                                className='text-2xl font-black text-center'
+                                            >
+                                                Additional Info
+                                            </span>
+                                            <span>{missingPerson.additional}</span>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                            setModelOpen(true)
+                        }}
                         src={missingPerson.image}
                         alt={`missingPerson ${missingPerson.id}`}
-                        className='h-48 w-48 object-cover rounded-lg'
+                        className='h-72 w-72 object-cover rounded-lg'
                     />
-
-                    <span>{missingPerson.name}</span>
-                    <span>Additional Info: {missingPerson.additional}</span>
                 </div>
             ))}
+
+            <ReactModal
+                isOpen = {modelOpen}
+                contentLabel="Example Modal"
+                onRequestClose={() => setModelOpen(false)}
+                className='w-96 h-96 bg-white rounded-xl p-5 flex flex-col items-center'
+            >
+                <button
+                    onClick={() => setModelOpen(false)}
+                    className='model-close-btn grow-0'
+                >
+                    X
+                </button>
+
+                {modelContent}
+            </ReactModal>
         </Carousel>
     );
 };

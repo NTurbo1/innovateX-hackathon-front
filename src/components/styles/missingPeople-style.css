@@ -1,0 +1,17 @@
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.model-close-btn {
+    margin-left: auto;
+    justify-self: start;
+}
+
+.model-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}

@@ -1,4 +1,4 @@
-const apiRoot = "https://8963-87-255-216-103.ngrok-free.app";
+const apiRoot = "https://3c8c-87-255-216-103.ngrok-free.app";
 
 const apiEndPoints = {
     "discounts": apiRoot + "/discounts",
