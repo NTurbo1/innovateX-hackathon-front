@@ -1,0 +1,9 @@
+.react-multi-carousel-track {
+    height: 100%;
+    gap: 25px;
+    align-items: center;
+}
+
+.react-multi-carousel-item {
+    width: 294.67px;
+}
